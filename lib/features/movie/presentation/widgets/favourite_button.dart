@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stage_assignment/features/movie/domain/entities/movie.dart';
-import 'package:stage_assignment/features/movie/presentation/blocs/movie_list/bloc/movie_list_bloc.dart';
+import 'package:stage_assignment/features/movie/presentation/blocs/bloc/movie_bloc.dart';
 
 class FavoriteButton extends StatelessWidget {
   final Movie movie;
@@ -12,7 +12,7 @@ class FavoriteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<MovieListBloc>().add(ToggleFavouriteEvent(movie: movie));
+        context.read<MovieBloc>().add(ToggleFavoriteEvent(movie));
       },
       child: Container(
         padding: const EdgeInsets.all(4),

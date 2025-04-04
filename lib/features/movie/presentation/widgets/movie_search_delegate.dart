@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stage_assignment/features/movie/presentation/blocs/movie_list/bloc/movie_list_bloc.dart';
 import 'package:stage_assignment/features/movie/presentation/widgets/movie_grid.dart';
 
-class MovieSearchDelegate extends SearchDelegate {
-  final MovieListBloc movieListBloc;
+import '../blocs/bloc/movie_bloc.dart';
 
-  MovieSearchDelegate({required this.movieListBloc});
+class MovieSearchDelegate extends SearchDelegate {
+  final MovieBloc movieBloc;
+
+  MovieSearchDelegate({required this.movieBloc});
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -32,15 +33,15 @@ class MovieSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    movieListBloc.add(SearchMoviesEvent(query: query));
-    return BlocBuilder<MovieListBloc, MovieListState>(
-      bloc: movieListBloc,
+    movieBloc.add(SearchMoviesEvent(query));
+    return BlocBuilder<MovieBloc, MovieState>(
+      bloc: movieBloc,
       builder: (context, state) {
-        if (state is MovieListInitial || state is MovieListLoading) {
+        if (state is MovieInitial || state is MovieLoading) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is MovieListLoaded) {
+        } else if (state is MoviesLoaded) {
           return MovieGrid(movies: state.movies);
-        } else if (state is MovieListError) {
+        } else if (state is MovieError) {
           return Center(child: Text(state.errMsg));
         } else {
           return Container();
@@ -51,7 +52,7 @@ class MovieSearchDelegate extends SearchDelegate {
 
   @override
   void close(BuildContext context, result) {
-    movieListBloc.add(GetMoviesEvent());
+    movieBloc.add(GetMoviesEvent());
     super.close(context, result);
   }
 

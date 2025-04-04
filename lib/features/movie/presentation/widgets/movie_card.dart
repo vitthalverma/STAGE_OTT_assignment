@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stage_assignment/features/movie/domain/entities/movie.dart';
-import 'package:stage_assignment/features/movie/presentation/blocs/movie_list/bloc/movie_list_bloc.dart';
+import 'package:stage_assignment/features/movie/presentation/blocs/bloc/movie_bloc.dart';
 import 'package:stage_assignment/features/movie/presentation/screens/movie_detail_screen.dart';
 import 'package:stage_assignment/features/movie/presentation/widgets/favourite_button.dart';
 
@@ -18,11 +18,11 @@ class MovieCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => MovieDetailScreen(movieId: movie.id),
+            builder: (context) => MovieDetailScreen(initialMovie: movie),
           ),
         ).then((_) {
           // Refresh the list when returning from detail page
-          context.read<MovieListBloc>().add(GetMoviesEvent());
+          context.read<MovieBloc>().add(GetMoviesEvent());
         });
       },
       child: Card(

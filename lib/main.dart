@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stage_assignment/features/movie/presentation/blocs/movie_list/bloc/movie_list_bloc.dart';
+import 'package:stage_assignment/features/movie/presentation/blocs/bloc/movie_bloc.dart';
 import 'package:stage_assignment/features/movie/presentation/screens/movie_list_screen.dart';
 import 'package:stage_assignment/injection_container.dart';
 
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) => sl<MovieListBloc>()..add(GetMoviesEvent())),
+            create: (context) => sl<MovieBloc>()..add(GetMoviesEvent())),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
