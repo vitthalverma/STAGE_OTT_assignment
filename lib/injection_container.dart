@@ -14,6 +14,7 @@ import 'package:stage_assignment/features/movie/domain/usecases/get_movie_detail
 import 'package:stage_assignment/features/movie/domain/usecases/get_movies.dart';
 import 'package:stage_assignment/features/movie/domain/usecases/search_movies.dart';
 import 'package:stage_assignment/features/movie/domain/usecases/toggle_favourite.dart';
+import 'package:stage_assignment/features/movie/presentation/blocs/movie_list/bloc/movie_list_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -21,19 +22,14 @@ Future<void> init() async {
   //! Features - Movie
   // Bloc
   sl.registerFactory(
-    () => MovieListBloc(
-      getPopularMovies: sl(),
-      searchMovies: sl(),
-      toggleFavorite: sl(),
-      getFavoriteMovies: sl(),
-    ),
+    () => MovieListBloc(sl(), sl(), sl()),
   );
-  sl.registerFactory(
-    () => MovieDetailBloc(
-      getMovieDetails: sl(),
-      toggleFavorite: sl(),
-    ),
-  );
+  // sl.registerFactory(
+  //   () => MovieDetailBloc(
+  //     getMovieDetails: sl(),
+  //     toggleFavorite: sl(),
+  //   ),
+  // );
 
   // Use cases
   sl.registerLazySingleton(() => GetMovies(sl()));
@@ -62,7 +58,7 @@ Future<void> init() async {
   final dio = Dio(BaseOptions(
     baseUrl: 'https://api.themoviedb.org/3',
     queryParameters: {
-      'api_key': 'YOUR_TMDB_API_KEY', // Replace with your TMDB API key
+      'api_key': '49d45d8d4d4baba62575d744fde85ad0',
     },
   ));
   sl.registerLazySingleton(() => dio);
