@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stage_assignment/features/movie/domain/entities/movie.dart';
-import 'package:stage_assignment/features/movie/presentation/blocs/bloc/movie_bloc.dart';
+import 'package:stage_assignment/features/movie/presentation/bloc/movie_bloc.dart';
 
 class FavoriteButton extends StatelessWidget {
   final Movie movie;
@@ -16,7 +16,7 @@ class FavoriteButton extends StatelessWidget {
       },
       child: Container(
         padding: const EdgeInsets.all(4),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.black54,
           shape: BoxShape.circle,
         ),

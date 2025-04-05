@@ -13,7 +13,7 @@ import 'package:stage_assignment/features/movie/domain/usecases/get_favourite_mo
 import 'package:stage_assignment/features/movie/domain/usecases/get_movies.dart';
 import 'package:stage_assignment/features/movie/domain/usecases/search_movies.dart';
 import 'package:stage_assignment/features/movie/domain/usecases/toggle_favourite.dart';
-import 'package:stage_assignment/features/movie/presentation/blocs/bloc/movie_bloc.dart';
+import 'package:stage_assignment/features/movie/presentation/bloc/movie_bloc.dart';
 
 final sl = GetIt.instance;
 

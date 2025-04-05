@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stage_assignment/features/movie/domain/entities/movie.dart';
-import 'package:stage_assignment/features/movie/presentation/blocs/bloc/movie_bloc.dart';
+import 'package:stage_assignment/features/movie/presentation/bloc/movie_bloc.dart';
 
 class MovieDetailContent extends StatelessWidget {
   final Movie movie;

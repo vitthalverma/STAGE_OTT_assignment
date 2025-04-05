@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stage_assignment/features/movie/presentation/widgets/movie_grid.dart';
 
-import '../blocs/bloc/movie_bloc.dart';
+import '../bloc/movie_bloc.dart';
 
 class MovieSearchDelegate extends SearchDelegate {
   final MovieBloc movieBloc;

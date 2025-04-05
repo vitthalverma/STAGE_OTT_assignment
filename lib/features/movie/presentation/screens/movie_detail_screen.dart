@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stage_assignment/features/movie/presentation/blocs/bloc/movie_bloc.dart';
+import 'package:stage_assignment/features/movie/presentation/bloc/movie_bloc.dart';
 import '../../domain/entities/movie.dart';
 
 class MovieDetailScreen extends StatelessWidget {
@@ -10,7 +10,6 @@ class MovieDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MovieBloc, MovieState>(
       builder: (context, state) {
-        // Get the most up-to-date movie from state
         final currentMovie = state is MoviesLoaded
             ? state.movies.firstWhere(
                 (m) => m.id == initialMovie.id,
@@ -56,7 +55,6 @@ class MovieDetailScreen extends StatelessWidget {
         background: Stack(
           fit: StackFit.expand,
           children: [
-            // Backdrop image
             movie.backdropPath.isNotEmpty
                 ? Image.network(
                     'https://image.tmdb.org/t/p/w500${movie.backdropPath}',
@@ -96,8 +94,6 @@ class MovieDetailScreen extends StatelessWidget {
                       );
                     },
                   ),
-
-            // Gradient overlay for better text visibility
             Positioned.fill(
               child: DecoratedBox(
                 decoration: BoxDecoration(
@@ -135,21 +131,18 @@ class MovieDetailScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Rating
           Row(
             children: [
               const Icon(Icons.star, color: Colors.amber),
               const SizedBox(width: 4),
               Text(
-                movie.voteAverage.toString(),
+                movie.voteAverage.toStringAsFixed(1),
                 style:
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ],
           ),
           const SizedBox(height: 16),
-
-          // Overview
           const Text(
             'Overview',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -160,10 +153,6 @@ class MovieDetailScreen extends StatelessWidget {
             style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 24),
-
-          // Cast
-
-          // Favorite button
           SizedBox(
             width: double.infinity,
             child: ElevatedButton.icon(

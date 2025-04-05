@@ -1,4 +1,5 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:stage_assignment/core/errors/exceptions.dart';
 import 'package:stage_assignment/core/errors/failures.dart';
 import 'package:stage_assignment/core/network/network_info.dart';
 import 'package:stage_assignment/features/movie/data/datasources/local/movie_local_data_source.dart';
@@ -25,8 +26,8 @@ class MovieRepositoryImpl implements MovieRepository {
           return movie.copyWith(isFavorite: isFavorite);
         }).toList();
         return right(mergedMovies.map((m) => m.toEntity()).toList());
-      } catch (e) {
-        return left(ServerFailure(e.toString()));
+      } on ServerException catch (e) {
+        return left(ServerFailure(e.message));
       }
     } else {
       final favorites = await localDataSource.getFavoriteMovies();
@@ -39,8 +40,8 @@ class MovieRepositoryImpl implements MovieRepository {
     try {
       final favorites = await localDataSource.getFavoriteMovies();
       return right(favorites.map((movie) => movie.toEntity()).toList());
-    } catch (e) {
-      return left(CacheFailure(e.toString()));
+    } on CacheException catch (e) {
+      return left(CacheFailure(e.message));
     }
   }
 
@@ -52,8 +53,8 @@ class MovieRepositoryImpl implements MovieRepository {
         final favorites = await localDataSource.getFavoriteMovies();
         final isFavorite = favorites.any((fav) => fav.id == movie.id);
         return right(movie.copyWith(isFavorite: isFavorite).toEntity());
-      } catch (e) {
-        return left(ServerFailure(e.toString()));
+      } on ServerException catch (e) {
+        return left(ServerFailure(e.message));
       }
     } else {
       return left(const NetworkFailure('No internet connection'));
@@ -76,8 +77,8 @@ class MovieRepositoryImpl implements MovieRepository {
           return movie.copyWith(isFavorite: isFavorite);
         }).toList();
         return right(mergedMovies.map((movie) => movie.toEntity()).toList());
-      } catch (e) {
-        return left(ServerFailure(e.toString()));
+      } on ServerException catch (e) {
+        return left(ServerFailure(e.message));
       }
     } else {
       final favorites = await localDataSource.getFavoriteMovies();
@@ -91,8 +92,8 @@ class MovieRepositoryImpl implements MovieRepository {
       final movieModel = MovieModel.fromEntity(movie);
       await localDataSource.toggleFavorite(movieModel);
       return right(null);
-    } catch (e) {
-      return left(CacheFailure(e.toString()));
+    } on CacheException catch (e) {
+      return left(CacheFailure(e.message));
     }
   }
 }
