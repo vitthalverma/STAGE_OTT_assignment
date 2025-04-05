@@ -62,11 +62,6 @@ class MovieRepositoryImpl implements MovieRepository {
   }
 
   @override
-  Future<void> initFavorites() async {
-    await localDataSource.init();
-  }
-
-  @override
   Future<Either<Failure, List<Movie>>> searchMovies(String query) async {
     if (await networkInfo.isConnected) {
       try {
@@ -87,11 +82,11 @@ class MovieRepositoryImpl implements MovieRepository {
   }
 
   @override
-  Future<Either<Failure, void>> toggleFavorite(Movie movie) async {
+  Future<Either<Failure, bool>> toggleFavorite(Movie movie) async {
     try {
       final movieModel = MovieModel.fromEntity(movie);
-      await localDataSource.toggleFavorite(movieModel);
-      return right(null);
+      final isFavorite = await localDataSource.toggleFavorite(movieModel);
+      return right(isFavorite);
     } on CacheException catch (e) {
       return left(CacheFailure(e.message));
     }

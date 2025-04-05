@@ -4,13 +4,13 @@ import 'package:stage_assignment/core/usecase/core_usecase.dart';
 import 'package:stage_assignment/features/movie/domain/entities/movie.dart';
 import 'package:stage_assignment/features/movie/domain/repository/movie_repository.dart';
 
-class ToggleFavorite implements UseCase<bool, Movie> {
+class GetMovieDetails implements UseCase<Movie, int> {
   final MovieRepository repository;
 
-  ToggleFavorite(this.repository);
+  GetMovieDetails(this.repository);
 
   @override
-  Future<Either<Failure, bool>> call(Movie params) async {
-    return await repository.toggleFavorite(params);
+  Future<Either<Failure, Movie>> call(int id) async {
+    return await repository.getMovieDetails(id);
   }
 }

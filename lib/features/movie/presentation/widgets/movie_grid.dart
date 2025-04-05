@@ -1,11 +1,27 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stage_assignment/features/movie/domain/entities/movie.dart';
-import 'package:stage_assignment/features/movie/presentation/widgets/movie_card.dart';
+import 'package:stage_assignment/features/movie/presentation/blocs/movie_list/movie_list_bloc.dart';
+import 'package:stage_assignment/features/movie/presentation/screens/movie_detail_screen.dart';
+import 'package:stage_assignment/features/movie/presentation/widgets/movie_grid_item.dart';
 
 class MovieGrid extends StatelessWidget {
   final List<Movie> movies;
 
   const MovieGrid({super.key, required this.movies});
+
+  void _navigateToDetails(BuildContext context, Movie movie) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MovieDetailScreen(movie: movie),
+      ),
+    );
+
+    if (result != null && result is Movie) {
+      context.read<MovieListBloc>().add(UpdateMovieListEvent(result));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +36,15 @@ class MovieGrid extends StatelessWidget {
       itemCount: movies.length,
       itemBuilder: (context, index) {
         final movie = movies[index];
-        return MovieCard(movie: movie);
+        return MovieGridItem(
+          movie: movie,
+          onTap: () => _navigateToDetails(context, movie),
+          onFavoriteToggle: (updatedMovie) {
+            context
+                .read<MovieListBloc>()
+                .add(UpdateMovieListEvent(updatedMovie));
+          },
+        );
       },
     );
   }

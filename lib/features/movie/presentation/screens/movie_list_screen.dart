@@ -1,74 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stage_assignment/features/movie/presentation/bloc/movie_bloc.dart';
+import 'package:stage_assignment/features/movie/presentation/blocs/movie_list/movie_list_bloc.dart';
+import 'package:stage_assignment/features/movie/presentation/widgets/error_message.dart';
 import 'package:stage_assignment/features/movie/presentation/widgets/movie_grid.dart';
-import 'package:stage_assignment/features/movie/presentation/widgets/movie_search_delegate.dart';
+import 'package:stage_assignment/features/movie/presentation/widgets/search_field.dart';
 
-class MovieListPage extends StatefulWidget {
-  const MovieListPage({super.key});
-
-  @override
-  State<MovieListPage> createState() => _MovieListPageState();
-}
-
-class _MovieListPageState extends State<MovieListPage> {
-  bool showFavoritesOnly = false;
-  @override
-  void initState() {
-    super.initState();
-    context.read<MovieBloc>().add(GetMoviesEvent());
-  }
-
-  void _toggleFavorites() {
-    setState(() {
-      showFavoritesOnly = !showFavoritesOnly;
-    });
-  }
+class MovieListScreen extends StatelessWidget {
+  const MovieListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Movies'),
-        centerTitle: true,
         actions: [
-          IconButton(
-            onPressed: _toggleFavorites,
-            icon: Icon(
-                showFavoritesOnly ? Icons.favorite : Icons.favorite_border),
-          ),
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: MovieSearchDelegate(
-                  movieBloc: context.read<MovieBloc>(),
-                ),
-              );
+          BlocBuilder<MovieListBloc, MovieListState>(
+            builder: (context, state) {
+              if (state is MovieListLoaded) {
+                return IconButton(
+                  icon: Icon(
+                    state.showFavorites
+                        ? Icons.favorite
+                        : Icons.favorite_border,
+                  ),
+                  onPressed: () {
+                    context.read<MovieListBloc>().add(
+                          ToggleViewEvent(!state.showFavorites),
+                        );
+                  },
+                );
+              }
+              return const SizedBox.shrink();
             },
           ),
         ],
       ),
-      body: BlocConsumer<MovieBloc, MovieState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          if (state is MovieLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is MoviesLoaded) {
-            final moviesToShow = showFavoritesOnly
-                ? state.movies.where((m) => m.isFavorite).toList()
-                : state.movies;
-            if (moviesToShow.isEmpty) {
-              return const Center(child: Text('No movies to show'));
-            }
-            return MovieGrid(movies: moviesToShow);
-          } else if (state is MovieError) {
-            return Center(child: Text(state.errMsg));
-          } else {
-            return Container();
-          }
-        },
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SearchField(),
+          ),
+          Expanded(
+            child: BlocBuilder<MovieListBloc, MovieListState>(
+              builder: (context, state) {
+                if (state is MovieListInitial || state is MovieListLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is MovieListLoaded) {
+                  if (state.movies.isEmpty) {
+                    return Center(
+                      child: Text(
+                        state.showFavorites
+                            ? 'No favorite movies yet'
+                            : 'No movies found',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    );
+                  }
+                  return MovieGrid(movies: state.movies);
+                } else if (state is MovieListError) {
+                  return ErrorMessage(
+                    message: state.message,
+                    onRetry: () =>
+                        context.read<MovieListBloc>().add(LoadMoviesEvent()),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

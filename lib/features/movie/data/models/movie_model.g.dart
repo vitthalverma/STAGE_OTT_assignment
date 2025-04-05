@@ -23,15 +23,14 @@ class MovieModelAdapter extends TypeAdapter<MovieModel> {
       posterPath: fields[3] as String,
       backdropPath: fields[4] as String,
       voteAverage: fields[5] as double,
-      releaseDate: fields[6] as String,
-      isFavorite: fields[7] as bool,
+      isFavorite: fields[6] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, MovieModel obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -45,8 +44,6 @@ class MovieModelAdapter extends TypeAdapter<MovieModel> {
       ..writeByte(5)
       ..write(obj.voteAverage)
       ..writeByte(6)
-      ..write(obj.releaseDate)
-      ..writeByte(7)
       ..write(obj.isFavorite);
   }
 

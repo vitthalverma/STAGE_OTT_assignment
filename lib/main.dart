@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stage_assignment/features/movie/presentation/bloc/movie_bloc.dart';
+import 'package:stage_assignment/features/movie/presentation/blocs/movie_detail/movie_details_bloc.dart';
+import 'package:stage_assignment/features/movie/presentation/blocs/movie_list/movie_list_bloc.dart';
 import 'package:stage_assignment/features/movie/presentation/screens/movie_list_screen.dart';
 import 'package:stage_assignment/injection_container.dart';
 
@@ -18,7 +19,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => sl<MovieBloc>()),
+        BlocProvider(
+            create: (context) => sl<MovieListBloc>()..add(LoadMoviesEvent())),
+        BlocProvider(create: (context) => sl<MovieDetailsBloc>()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -27,7 +30,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const MovieListPage(),
+        home: const MovieListScreen(),
       ),
     );
   }

@@ -5,7 +5,6 @@ class Movie {
   final String posterPath;
   final String backdropPath;
   final double voteAverage;
-  final String releaseDate;
   final bool isFavorite;
 
   const Movie({
@@ -15,7 +14,6 @@ class Movie {
     required this.posterPath,
     required this.backdropPath,
     required this.voteAverage,
-    required this.releaseDate,
     this.isFavorite = false,
   });
 
@@ -36,7 +34,6 @@ class Movie {
       posterPath: posterPath ?? this.posterPath,
       backdropPath: backdropPath ?? this.backdropPath,
       voteAverage: voteAverage ?? this.voteAverage,
-      releaseDate: releaseDate ?? this.releaseDate,
       isFavorite: isFavorite ?? this.isFavorite,
     );
   }

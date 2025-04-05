@@ -18,8 +18,6 @@ class MovieModel {
   @HiveField(5)
   final double voteAverage;
   @HiveField(6)
-  final String releaseDate;
-  @HiveField(7)
   final bool isFavorite;
 
   const MovieModel({
@@ -29,7 +27,6 @@ class MovieModel {
     required this.posterPath,
     required this.backdropPath,
     required this.voteAverage,
-    required this.releaseDate,
     this.isFavorite = false,
   });
 
@@ -41,7 +38,6 @@ class MovieModel {
       posterPath: json['poster_path'] ?? '',
       backdropPath: json['backdrop_path'] ?? '',
       voteAverage: (json['vote_average'] as num).toDouble(),
-      releaseDate: json['release_date'] ?? '',
     );
   }
 
@@ -53,7 +49,6 @@ class MovieModel {
       posterPath: movie.posterPath,
       backdropPath: movie.backdropPath,
       voteAverage: movie.voteAverage,
-      releaseDate: movie.releaseDate,
       isFavorite: movie.isFavorite,
     );
   }
@@ -66,7 +61,6 @@ class MovieModel {
       posterPath: posterPath,
       backdropPath: backdropPath,
       voteAverage: voteAverage,
-      releaseDate: releaseDate,
       isFavorite: isFavorite,
     );
   }
@@ -88,7 +82,6 @@ class MovieModel {
       posterPath: posterPath ?? this.posterPath,
       backdropPath: backdropPath ?? this.backdropPath,
       voteAverage: voteAverage ?? this.voteAverage,
-      releaseDate: releaseDate ?? this.releaseDate,
       isFavorite: isFavorite ?? this.isFavorite,
     );
   }
