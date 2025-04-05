@@ -18,9 +18,9 @@ class MovieGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4.0,
+      elevation: 4,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(8),
       ),
       clipBehavior: Clip.antiAlias,
       child: Stack(
@@ -48,7 +48,7 @@ class MovieGridItem extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8),
                   child: Text(
                     movie.title,
                     maxLines: 2,
@@ -62,8 +62,8 @@ class MovieGridItem extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 8.0,
-            right: 8.0,
+            top: 8,
+            right: 8,
             child: FavoriteButton(
               movie: movie,
               onFavoriteToggle: onFavoriteToggle,

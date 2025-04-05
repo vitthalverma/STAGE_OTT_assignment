@@ -28,7 +28,7 @@ class _SearchFieldState extends State<SearchField> {
         hintText: 'Search movies...',
         prefixIcon: const Icon(Icons.search),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(8),
         ),
         suffixIcon: IconButton(
           icon: const Icon(Icons.clear),

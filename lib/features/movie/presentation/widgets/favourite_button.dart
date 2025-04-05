@@ -42,27 +42,27 @@ class _FavoriteButtonState extends State<FavoriteButton> {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(20),
         onTap: _isLoading ? null : _toggleFavorite,
         child: Container(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: Colors.black.withOpacity(0.5),
             shape: BoxShape.circle,
           ),
           child: _isLoading
               ? const SizedBox(
-                  width: 24.0,
-                  height: 24.0,
+                  width: 24,
+                  height: 24,
                   child: CircularProgressIndicator(
-                    strokeWidth: 2.0,
+                    strokeWidth: 2,
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   ),
                 )
               : Icon(
                   _isFavorite ? Icons.favorite : Icons.favorite_border,
                   color: _isFavorite ? Colors.red : Colors.white,
-                  size: 24.0,
+                  size: 24,
                 ),
         ),
       ),

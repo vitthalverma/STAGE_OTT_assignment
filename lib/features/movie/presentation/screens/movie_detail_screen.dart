@@ -62,7 +62,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: 300.0,
+            expandedHeight: 300,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               background: CachedNetworkImage(
@@ -97,20 +97,28 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     movie.title,
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 22),
                   ),
-                  const SizedBox(height: 8.0),
+                  const SizedBox(height: 8),
                   Text(
-                    '${movie.voteAverage.toStringAsFixed(1)}',
+                    movie.voteAverage.toStringAsFixed(1),
                     style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 5),
+                  const Text(
+                    'Overview',
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    movie.overview,
+                    style: const TextStyle(fontSize: 15),
                   ),
                 ],
               ),

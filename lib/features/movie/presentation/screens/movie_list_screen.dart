@@ -38,7 +38,7 @@ class MovieListScreen extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16),
             child: SearchField(),
           ),
           Expanded(
