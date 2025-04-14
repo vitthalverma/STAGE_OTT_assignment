@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -60,7 +61,7 @@ Future<void> init() async {
   final dio = Dio(BaseOptions(
     baseUrl: 'https://api.themoviedb.org/3',
     queryParameters: {
-      'api_key': '49d45d8d4d4baba62575d744fde85ad0',
+      'api_key': dotenv.env['MOVIE_DB_API_KEY'],
     },
   ));
   sl.registerLazySingleton(() => dio);

@@ -8,10 +8,10 @@ class FavoriteButton extends StatefulWidget {
   final Function(Movie) onFavoriteToggle;
 
   const FavoriteButton({
-    Key? key,
+    super.key,
     required this.movie,
     required this.onFavoriteToggle,
-  }) : super(key: key);
+  });
 
   @override
   _FavoriteButtonState createState() => _FavoriteButtonState();
@@ -19,7 +19,6 @@ class FavoriteButton extends StatefulWidget {
 
 class _FavoriteButtonState extends State<FavoriteButton> {
   bool _isFavorite = false;
-  bool _isLoading = false;
 
   @override
   void initState() {
@@ -28,7 +27,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
   }
 
   @override
-  void didUpdateWidget(FavoriteButton oldWidget) {
+  void didUpdateWidget(covariant FavoriteButton oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.movie.isFavorite != widget.movie.isFavorite) {
       setState(() {
@@ -43,40 +42,25 @@ class _FavoriteButtonState extends State<FavoriteButton> {
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
-        onTap: _isLoading ? null : _toggleFavorite,
+        onTap: _toggleFavorite,
         child: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: Colors.black.withOpacity(0.5),
             shape: BoxShape.circle,
           ),
-          child: _isLoading
-              ? const SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  ),
-                )
-              : Icon(
-                  _isFavorite ? Icons.favorite : Icons.favorite_border,
-                  color: _isFavorite ? Colors.red : Colors.white,
-                  size: 24,
-                ),
+          child: Icon(
+            _isFavorite ? Icons.favorite : Icons.favorite_border,
+            color: _isFavorite ? Colors.red : Colors.white,
+            size: 24,
+          ),
         ),
       ),
     );
   }
 
-  Future<void> _toggleFavorite() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      final result = await sl<ToggleFavorite>()(widget.movie);
-
+  void _toggleFavorite() {
+    sl<ToggleFavorite>()(widget.movie).then((result) {
       result.fold(
         (failure) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -91,10 +75,6 @@ class _FavoriteButtonState extends State<FavoriteButton> {
               .onFavoriteToggle(widget.movie.copyWith(isFavorite: isFavorite));
         },
       );
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
+    });
   }
 }

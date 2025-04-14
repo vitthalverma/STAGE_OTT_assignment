@@ -48,7 +48,7 @@ class MovieGridItem extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8.0),
                   child: Text(
                     movie.title,
                     maxLines: 2,
@@ -62,8 +62,8 @@ class MovieGridItem extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 8,
-            right: 8,
+            top: 8.0,
+            right: 8.0,
             child: FavoriteButton(
               movie: movie,
               onFavoriteToggle: onFavoriteToggle,

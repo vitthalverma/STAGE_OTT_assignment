@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:stage_assignment/features/movie/presentation/blocs/movie_detail/movie_details_bloc.dart';
 import 'package:stage_assignment/features/movie/presentation/blocs/movie_list/movie_list_bloc.dart';
 import 'package:stage_assignment/features/movie/presentation/screens/movie_list_screen.dart';
@@ -7,6 +8,7 @@ import 'package:stage_assignment/injection_container.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: '.env');
   await init();
   runApp(const MyApp());
 }

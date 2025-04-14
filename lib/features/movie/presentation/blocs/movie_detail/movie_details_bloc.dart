@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stage_assignment/features/movie/domain/entities/movie.dart';
 import 'package:stage_assignment/features/movie/domain/usecases/get_movie_details.dart';
 import 'package:stage_assignment/features/movie/domain/usecases/toggle_favourite.dart';
-
 part 'movie_details_event.dart';
 part 'movie_details_state.dart';
 
